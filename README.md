@@ -1,1 +1,0 @@
-The aim of this project is to firstly better understand the elements in a web page, navigate the developer tools via 'inspect', and lastly, deconstruct an existing web page and rebuild it. I used VS Code, the CLI, and git workflows to produce this project.
