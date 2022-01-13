@@ -13,9 +13,17 @@
 </head>
 
 <body>
-    <h1 id="header"></h1>
+    <div class="welcome">
+        <div class="header">
+            <div id="header1">
+                <h1 id="header-play"></h1>
+            </div>
+            <div id="header2">
+                <h2>Cynthia's Connect 4 Game!</h2>
+            </div>
+        </div>
+    </div>
 
-    <h2>Welcome to Cynthia's Connect 4 Game!</h2>
     <script src="./connect4_code.js" crossorigin="anonymous"></script>
    
     <div id="container">
@@ -74,6 +82,12 @@
                 <div class=" col" id="row6-col6" onClick="takeTurn(event);"> # </div>
                 <div class=" col" id="row6-col7" onClick="takeTurn(event);"> # </div>
             </div>
+        </div>
+    </div>
+
+    <div class="button">
+        <div id="reset-button">
+            <button type="button">Start Again</button>
         </div>
     </div>
 

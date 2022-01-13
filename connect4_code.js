@@ -1,5 +1,5 @@
-const tag = document.getElementById("header")
-tag.innerText = "connect 4"
+const header = document.getElementById("header-play")
+header.innerText = "Let's Play!"
 
 let turn = 0
 let player1 = "red"
