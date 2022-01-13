@@ -1,0 +1,10 @@
+#container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+.col {
+    border: solid lightgray 1px;
+    color: transparent;
+    border-radius: 50px
+}

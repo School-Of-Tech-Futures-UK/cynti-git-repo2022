@@ -57,3 +57,9 @@ function getLowestAvailableRowInColumn(cynthiaColumnNumber, myGridSoItIs) {
 
     return null;
 }
+
+
+function resetGame() {
+    grid
+    player = 'red'
+}
