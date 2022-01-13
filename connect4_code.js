@@ -1,5 +1,6 @@
 const tag = document.getElementById("header")
 tag.innerText = "connect 4"
+
 let turn = 0
 let player1 = "red"
 
