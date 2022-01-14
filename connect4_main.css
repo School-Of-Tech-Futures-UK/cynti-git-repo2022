@@ -1,0 +1,31 @@
+.header {
+    text-align: center;
+}
+
+.grid {
+    background-color: lightskyblue;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    border: cadetblue 1px solid;
+    margin: auto;
+}
+
+.row {
+    align-self: center;
+}
+
+.slot {
+    background-color: white;
+    border: solid 1px lightslategrey;
+    width: 90px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
