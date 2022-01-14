@@ -54,28 +54,23 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
     return null;
 }
 
-function resetGame() {
-    grid = [
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null]
-    ]
-    player = 'red'
-    win = false
-    let oldGrid = document.getElementsByClassName('col')
+document.getElementById('reset-button').onclick = () => {
+        grid = [
+            [null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null]
+        ]
+        player = 'red'
+        win = false
+        
+        let oldGrid = document.getElementsByClassName('col')
+        for (x of oldGrid) {
+            x.style.backgroundColor = 'white';
 
-    console.log(`old grid is: ${oldGrid}`)
-
-    for (x of oldGrid) {
-        console.log(`x is: ${x}`)
-
-        x.style.backgroundColor = 'white';
-
+            console.log('resetGame was called')
+        }  
     }
 
-    console.log('reset function called')
-    
-};

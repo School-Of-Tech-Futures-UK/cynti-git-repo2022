@@ -22,14 +22,12 @@
     width: 90px;
     height: 80px;
     border-radius: 50%;
+    padding: 20px
 }
 
 .footer {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-}
-
-#reset {
     font-size: 200%;
 }
