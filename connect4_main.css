@@ -4,12 +4,12 @@
 
 .grid {
     background-color: lightskyblue;
-    width: 600px;
-    height: 600px;
-    display: flex;
+    width: 700px;
+    height: 500px;
     justify-content: center;
     border: cadetblue 1px solid;
     margin: auto;
+    padding: 10px
 }
 
 .row {
@@ -30,6 +30,6 @@
     margin-top: 1rem;
 }
 
-#reset-button {
+#reset {
     font-size: 200%;
 }

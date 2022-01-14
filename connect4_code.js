@@ -4,7 +4,6 @@ const displayCurrentPlayer = document.getElementById('current-player');
 const result = document.getElementById('result');
 
 let player1 = "red"
-let player2 = "yellow"
 let win = false
 
 let grid = [
@@ -19,6 +18,7 @@ let grid = [
 function takeTurn(e) {
     const id = e.target.id   // 'row1-col1'   ________x
     // 'rowY-colX' 
+    console.log(`id is: ${id}`)
 
     const rowNum = id[3]
     const colNum = id[8]
@@ -26,8 +26,7 @@ function takeTurn(e) {
     const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, grid)
     console.log(`Lowest available row: ${lowestAvailableRow}`)
 
-    if (lowestAvailableRow !== null || win === false) {
-        turn++
+    if (lowestAvailableRow !== null && win === false) {
 
         if (player1 === "red") {
             grid[lowestAvailableRow][colNum - 1] = "red"
@@ -41,7 +40,6 @@ function takeTurn(e) {
     }
 
     console.log(`You clicked column ${colNum}`)
-    console.log(`Turn number ${turn}`)
     console.log(grid)
 }
 
@@ -56,17 +54,28 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
     return null;
 }
 
-    
 function resetGame() {
-        grid = [
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null]
-        ]
-        player = 'red'
-        win = false
-        console.log('reset function called')
-    };
+    grid = [
+        [null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null]
+    ]
+    player = 'red'
+    win = false
+    let oldGrid = document.getElementsByClassName('col')
+
+    console.log(`old grid is: ${oldGrid}`)
+
+    for (x of oldGrid) {
+        console.log(`x is: ${x}`)
+
+        x.style.backgroundColor = 'white';
+
+    }
+
+    console.log('reset function called')
+    
+};
