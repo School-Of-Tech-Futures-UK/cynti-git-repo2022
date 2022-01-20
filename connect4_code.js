@@ -40,7 +40,7 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
             if (horizontalWinner()){
-                return(alert('Winner!'))
+                return(alert('Red is the Winner!'))
             }
         } else if (player === 'yellow') {
             grid[lowestAvailableRow][colNum - 1] = "yellow"
@@ -48,9 +48,13 @@ function takeTurn(e) {
             player = "red"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
+            if (horizontalWinner()){
+                return(alert('Yellow is the Winner!'))
+            }
         } else if (turn === 42) {
             displayCurrentPlayer.textContent = 'Nobody wins'
             displayCurrentPlayer.style.backgroundColor = 'grey'
+            alert('It\'s a Tie!')
         } else {
             return null
         }
@@ -82,15 +86,14 @@ document.getElementById('reset-button').onclick = () => {
             [null, null, null, null, null, null, null],
             [null, null, null, null, null, null, null]
         ]
-        player1 = 'red'
+        player = 'red'
         win = false
-        displayCurrentPlayer.textContent = player1
+        displayCurrentPlayer.textContent = player
         displayCurrentPlayer.style.backgroundColor = 'red'
         
         let oldGrid = document.getElementsByClassName('col')
         for (x of oldGrid) {
             x.style.backgroundColor = 'white';
-
             console.log('resetGame was called')
         }  
     }
@@ -103,7 +106,10 @@ document.getElementById('reset-button').onclick = () => {
 function horizontalWinner(){
     for(let r = 0; r < 6; r++) {
         for (let c = 0; c < 4; c++) {
-            if(grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') {
+            if(
+                (grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') ||
+                (grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow')
+             ) {
                 return true
             }
         }
