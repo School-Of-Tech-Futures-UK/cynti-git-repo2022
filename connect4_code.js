@@ -1,12 +1,13 @@
 // Declare selectors and variables
 
-const displayCurrentPlayer = document.getElementById('current-player');
-const result = document.getElementById('result');
-
-let player1 = "red"
-displayCurrentPlayer.textContent = player1
+const displayCurrentPlayer = document.getElementById('current-player')
+const result = document.getElementById('result')
+const row = document.getElementsByClassName('row')
+let player = "red"
+displayCurrentPlayer.textContent = player
 displayCurrentPlayer.style.backgroundColor = 'red'
 let win = false
+let turn = 0
 
 let grid = [
     [null, null, null, null, null, null, null],
@@ -30,23 +31,34 @@ function takeTurn(e) {
 
     if (lowestAvailableRow !== null && win === false) {
 
-        if (player1 === "red") {
+        turn++
+
+        if (player === "red") {
             grid[lowestAvailableRow][colNum - 1] = "red"
             document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'red';
-            player1 = "yellow"
-            displayCurrentPlayer.textContent = player1
+            player = "yellow"
+            displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
-        } else {
+            if (horizontalWinner()){
+                return(alert('Winner!'))
+            }
+        } else if (player === 'yellow') {
             grid[lowestAvailableRow][colNum - 1] = "yellow"
             document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'yellow';
-            player1 = "red"
-            displayCurrentPlayer.textContent = player1
+            player = "red"
+            displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
+        } else if (turn === 42) {
+            displayCurrentPlayer.textContent = 'Nobody wins'
+            displayCurrentPlayer.style.backgroundColor = 'grey'
+        } else {
+            return null
         }
     }
 
     console.log(`You clicked column ${colNum}`)
     console.log(grid)
+    console.log(turn)
 }
 
 // find the lowest available empty slot in a column and row
@@ -83,3 +95,17 @@ document.getElementById('reset-button').onclick = () => {
         }  
     }
 
+
+
+// function consecutiveColour(one, two, three, four) {
+//     return (one === two && one === three && one === four && one !== 'white')}
+
+function horizontalWinner(){
+    for(let r = 0; r < 6; r++) {
+        for (let c = 0; c < 4; c++) {
+            if(grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') {
+                return true
+            }
+        }
+    }
+}
