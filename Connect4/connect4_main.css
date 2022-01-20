@@ -25,9 +25,38 @@
     margin: 3px
 }
 
-.footer {
+.reset {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+    margin-bottom: 1rem;
     font-size: 200%;
+}
+
+#score-title {
+    text-align: center;
+    font-size: 300%;
+}
+
+.scoreboard {
+    background-color: lightsteelblue;
+    width: 500px;
+    height: 300px;
+    justify-content: center;
+    border: black 5px dotted;
+    margin: auto;
+    padding: 0px;
+    display: flex;
+}
+
+.score-row {
+    margin: auto;
+    padding: 10%;
+}
+
+.score-column {
+    border: black 1px solid;
+    width: 240px;
+    background: lightyellow;
+    text-align: center;
 }

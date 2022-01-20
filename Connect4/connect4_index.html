@@ -19,7 +19,7 @@
 
     <div class="header">
         <h1>Cynthia's Connect 4 Game!</h1>
-        <h2>Player turn is: Player <span id="current-player">red</span></h2>
+        <h2>Player turn is: <span id="current-player-name"></span> <span id="current-player"></span></h2>
         <h2 id="result"></h2>
     </div>       
 
@@ -81,10 +81,30 @@
     </div>
 
     
-    <div class="footer">
+    <div class="reset">
         <div>
             <button type="button" name="button" id="reset-button" onClick="resetGame()">Start Again</button>
         </div>
+    </div>
+
+    <p id="score-title">** TOP 3 HIGHSCORES **</p>
+    <div class="scoreboard">
+        <table>
+            <tr class="score-row">
+                <td class="score-column">hello</td>
+                <td class="score-column">hello</td>
+            </tr>
+
+            <tr class="score-row">
+                <td class="score-column">hello</td>
+                <td class="score-column">hello</td>
+            </tr>
+
+            <tr class="score-row">
+                <td class="score-column">hello</td>
+                <td class="score-column">hello</td>
+            </tr>
+        </table>
     </div>
     
     <script src="connect4_code.js"></script>

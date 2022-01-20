@@ -1,13 +1,34 @@
-// Declare selectors and variables
+// Bugs to fix:
+// 1) verticalWinner() doesn't work if win starts from bottom row
+// 2) Nobody winner not declaring yet
+// 3) playername doesnt reset to blank
 
-const displayCurrentPlayer = document.getElementById('current-player')
+
+// Declare selectors and variables
 const result = document.getElementById('result')
 const row = document.getElementsByClassName('row')
 let player = "red"
-displayCurrentPlayer.textContent = player
-displayCurrentPlayer.style.backgroundColor = 'red'
+let player1Name
+let player2Name
 let win = false
 let turn = 0
+
+const displayCurrentPlayer = document.getElementById('current-player')
+displayCurrentPlayer.textContent = player
+displayCurrentPlayer.style.backgroundColor = 'red'
+
+const displayCurrentPlayerName = document.getElementById('current-player-name')
+displayCurrentPlayerName.textContent = player1Name
+
+// alert pop-up will prompt for player 1 name
+while (!player1Name) {
+    player1Name = prompt('Player One (RED): Enter your name')
+}
+
+// alert pop-up will prompt for player 2 name
+while (!player2Name) {
+    player2Name = prompt('Player Two (YELLOW): Enter your name')
+}
 
 let grid = [
     [null, null, null, null, null, null, null],
@@ -39,6 +60,7 @@ function takeTurn(e) {
             player = "yellow"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
+            displayCurrentPlayerName.textContent = player2Name
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
                 return alert('Red is the Winner!')
@@ -49,6 +71,7 @@ function takeTurn(e) {
             player = "red"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
+            displayCurrentPlayerName.textContent = player1Name
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
                 return alert('Yellow is the Winner!')
@@ -93,6 +116,7 @@ document.getElementById('reset-button').onclick = () => {
         win = false
         displayCurrentPlayer.textContent = player
         displayCurrentPlayer.style.backgroundColor = 'red'
+        displayCurrentPlayerName.textContent = player1Name
         
         let oldGrid = document.getElementsByClassName('col')
         for (x of oldGrid) {
