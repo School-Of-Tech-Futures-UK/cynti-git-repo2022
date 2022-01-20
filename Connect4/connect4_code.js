@@ -1,7 +1,7 @@
 // Bugs to fix:
 // 1) verticalWinner() doesn't work if win starts from bottom row
 // 2) Nobody winner not declaring yet
-// 3) playername doesnt reset to blank
+// 3) playername doesnt reset to blank prompt alert
 
 
 // Declare selectors and variables
@@ -25,11 +25,14 @@ while (!player1Name) {
     }
 
 displayCurrentPlayerName.textContent = player1Name
+console.log(player1Name)
 
 // alert pop-up will prompt for player 2 name until completed
 while (!player2Name) {
     player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
+console.log(player2Name)
+
 
 let grid = [
     [null, null, null, null, null, null, null],
