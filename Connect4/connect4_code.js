@@ -18,14 +18,15 @@ displayCurrentPlayer.textContent = player
 displayCurrentPlayer.style.backgroundColor = 'red'
 
 const displayCurrentPlayerName = document.getElementById('current-player-name')
-displayCurrentPlayerName.textContent = player1Name
 
-// alert pop-up will prompt for player 1 name
+// alert pop-up will prompt for player 1 name until completed
 while (!player1Name) {
     player1Name = prompt('Player One (RED): Enter your name')
-}
+    }
 
-// alert pop-up will prompt for player 2 name
+displayCurrentPlayerName.textContent = player1Name
+
+// alert pop-up will prompt for player 2 name until completed
 while (!player2Name) {
     player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
@@ -116,8 +117,9 @@ document.getElementById('reset-button').onclick = () => {
         win = false
         displayCurrentPlayer.textContent = player
         displayCurrentPlayer.style.backgroundColor = 'red'
-        displayCurrentPlayerName.textContent = player1Name
-        
+
+        displayCurrentPlayerName.textContent = null
+
         let oldGrid = document.getElementsByClassName('col')
         for (x of oldGrid) {
             x.style.backgroundColor = 'white';
