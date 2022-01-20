@@ -21,13 +21,13 @@ let grid = [
 // takes a turn based on user clicking a slot
 function takeTurn(e) {
     const id = e.target.id   // 'row1-col1' // 'rowY-colX' 
-    console.log(`id is: ${id}`)
+    //console.log(`id is: ${id}`)
 
     const rowNum = id[3]
     const colNum = id[8]
 
     const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, grid)
-    console.log(`Lowest available row: ${lowestAvailableRow}`)
+    //console.log(`Lowest available row: ${lowestAvailableRow}`)
 
     if (lowestAvailableRow !== null && win === false) {
 
@@ -40,7 +40,8 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
-                return(alert('Red is the Winner!'))
+                win = true
+                return alert('Red is the Winner!')
             }
         } else if (player === 'yellow') {
             grid[lowestAvailableRow][colNum - 1] = "yellow"
@@ -49,20 +50,22 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
-                return(alert('Yellow is the Winner!'))
+                win = true
+                return alert('Yellow is the Winner!')
             }
         } else if (turn === 42) {
-            displayCurrentPlayer.textContent = 'Nobody wins'
-            displayCurrentPlayer.style.backgroundColor = 'grey'
-            alert('It\'s a Tie!')
+            player = "Nobody"
+            displayCurrentPlayer.textContent = player
+            displayCurrentPlayer.style.backgroundColor = 'blue'
+            return (alert('It\'s a Tie!'))
         } else {
             return null
         }
     }
 
-    console.log(`You clicked column ${colNum}`)
-    console.log(grid)
-    console.log(turn)
+    //console.log(`You clicked column ${colNum}`)
+    //console.log(grid)
+    console.log(`This is turn no: ${turn}`)
 }
 
 // find the lowest available empty slot in a column and row
@@ -98,11 +101,7 @@ document.getElementById('reset-button').onclick = () => {
         }  
     }
 
-
-
-// function consecutiveColour(one, two, three, four) {
-//     return (one === two && one === three && one === four && one !== 'white')}
-
+// check 4 slots in a row = winner
 function horizontalWinner(){
     for(let r = 0; r < 6; r++) {
         for (let c = 0; c < 4; c++) {
@@ -116,6 +115,7 @@ function horizontalWinner(){
     }
 }
 
+// check 4 slots in a column = winner
 function verticalWinner(){
     for(let r = 0; r < 4; r++) {
         for (let c = 0; c < 7; c++) {
@@ -129,6 +129,7 @@ function verticalWinner(){
     }
 }
 
+// check 4 slots upward diagonal = winner
 function diagonalUpWinner(){
     for(let r = 0; r < 3; r++) {
         for (let c = 0; c < 7; c++) {
@@ -142,6 +143,7 @@ function diagonalUpWinner(){
     }
 }
 
+// check 4 slots downward diagonal = winner
 function diagonalDownWinner(){
     for(let r = 0; r < 3; r++) {
         for (let c = 7; c > 2; c--) {
