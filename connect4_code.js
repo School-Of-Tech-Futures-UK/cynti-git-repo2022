@@ -39,7 +39,7 @@ function takeTurn(e) {
             player = "yellow"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
-            if (horizontalWinner()){
+            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 return(alert('Red is the Winner!'))
             }
         } else if (player === 'yellow') {
@@ -48,7 +48,7 @@ function takeTurn(e) {
             player = "red"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
-            if (horizontalWinner()){
+            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 return(alert('Yellow is the Winner!'))
             }
         } else if (turn === 42) {
@@ -109,6 +109,45 @@ function horizontalWinner(){
             if(
                 (grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') ||
                 (grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow')
+             ) {
+                return true
+            }
+        }
+    }
+}
+
+function verticalWinner(){
+    for(let r = 0; r < 4; r++) {
+        for (let c = 0; c < 7; c++) {
+            if(
+                (grid[r][c] === 'red' && grid[r+1][c] === 'red' && grid[r+2][c] === 'red' && grid[r+3][c] === 'red') ||
+                (grid[r][c] === 'yellow' && grid[r+1][c] === 'yellow' && grid[r+2][c] === 'yellow' && grid[r+3][c] === 'yellow')
+             ) {
+                return true
+            }
+        }
+    }
+}
+
+function diagonalUpWinner(){
+    for(let r = 0; r < 3; r++) {
+        for (let c = 0; c < 7; c++) {
+            if(
+                (grid[r][c] === 'red' && grid[r+1][c+1] === 'red' && grid[r+2][c+2] === 'red' && grid[r+3][c+3] === 'red') ||
+                (grid[r][c] === 'yellow' && grid[r+1][c+1] === 'yellow' && grid[r+2][c+2] === 'yellow' && grid[r+3][c+3] === 'yellow')
+             ) {
+                return true
+            }
+        }
+    }
+}
+
+function diagonalDownWinner(){
+    for(let r = 0; r < 3; r++) {
+        for (let c = 7; c > 2; c--) {
+            if(
+                (grid[r][c] === 'red' && grid[r+1][c-1] === 'red' && grid[r+2][c-2] === 'red' && grid[r+3][c-3] === 'red') ||
+                (grid[r][c] === 'yellow' && grid[r+1][c-1] === 'yellow' && grid[r+2][c-2] === 'yellow' && grid[r+3][c-3] === 'yellow')
              ) {
                 return true
             }
