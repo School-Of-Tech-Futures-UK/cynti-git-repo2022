@@ -13,6 +13,13 @@ let player2Name
 let win = false
 let turn = 0
 let winnerPlayer
+let highscoreTablePlayer
+let highscoreTableScore
+let highscore = 0
+let player1score = 0
+let player2score = 0
+let totalScore = player1score + player2score
+let maxTurn = 42
 
 const displayCurrentPlayer = document.getElementById('current-player')
 displayCurrentPlayer.textContent = player
@@ -66,10 +73,13 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
             displayCurrentPlayerName.textContent = player2Name
-            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
+            player1score ++
+            console.log(`${player1Name} score is ${player1score}`)
+
+            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
                 win = true
                 winnerPlayer = player1Name
-                let highscoreTablePlayer = document.getElementById("hsrow1col1")
+                highscoreTablePlayer = document.getElementById("hsrow1col1")
                 highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player1Name} is the Winner!`)
             }
@@ -80,13 +90,17 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
             displayCurrentPlayerName.textContent = player1Name
+           player2score ++
+            console.log(`${player2Name} score is ${player2score}`)
+
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
                 winnerPlayer = player2Name
-                let highscoreTablePlayer = document.getElementById("hsrow1col1")
+                highscoreTablePlayer = document.getElementById("hsrow1col1")
                 highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player2Name} is the Winner!`)
             }
+
         } else if (turn === 42) {
             player = "Nobody"
             displayCurrentPlayer.textContent = player
@@ -115,7 +129,11 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
 }
 
 // Find and store highscore
-
+if ((player1score < player2score) ||
+    (player2score < player1score)) {
+    highscore = maxScore - totalScore
+    highscoreTableScore = document.getElementById("hsrow1col2")
+    highscoreTableScore.innerText = highscore
 
 
 // reset's game when reset button clicked
@@ -197,3 +215,4 @@ function diagonalDownWinner(){
         }
     }
 }
+    }
