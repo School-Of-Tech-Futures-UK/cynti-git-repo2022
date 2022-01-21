@@ -12,6 +12,7 @@ let player1Name
 let player2Name
 let win = false
 let turn = 0
+let winnerPlayer
 
 const displayCurrentPlayer = document.getElementById('current-player')
 displayCurrentPlayer.textContent = player
@@ -67,7 +68,10 @@ function takeTurn(e) {
             displayCurrentPlayerName.textContent = player2Name
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
-                return alert('Red is the Winner!')
+                winnerPlayer = player1Name
+                let highscoreTablePlayer = document.getElementById("hsrow1col1")
+                highscoreTablePlayer.innerText = winnerPlayer
+                return alert(`${player1Name} is the Winner!`)
             }
         } else if (player === 'yellow') {
             grid[lowestAvailableRow][colNum - 1] = "yellow"
@@ -78,12 +82,16 @@ function takeTurn(e) {
             displayCurrentPlayerName.textContent = player1Name
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
-                return alert('Yellow is the Winner!')
+                winnerPlayer = player2Name
+                let highscoreTablePlayer = document.getElementById("hsrow1col1")
+                highscoreTablePlayer.innerText = winnerPlayer
+                return alert(`${player2Name} is the Winner!`)
             }
         } else if (turn === 42) {
             player = "Nobody"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'blue'
+            winnerPlayer = null
             return (alert('It\'s a Tie!'))
         } else {
             return null
@@ -105,6 +113,10 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
 
     return null;
 }
+
+// Find and store highscore
+
+
 
 // reset's game when reset button clicked
 document.getElementById('reset-button').onclick = () => {
