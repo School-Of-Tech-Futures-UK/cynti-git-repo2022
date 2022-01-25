@@ -79,8 +79,8 @@ function takeTurn(e) {
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
                 win = true
                 winnerPlayer = player1Name
-                highscoreTablePlayer = document.getElementById("hsrow1col1")
-                highscoreTablePlayer.innerText = winnerPlayer
+                //highscoreTablePlayer = document.getElementById("hsrow1col1")
+                //highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player1Name} is the Winner!`)
             }
         } else if (player === 'yellow') {
@@ -96,8 +96,8 @@ function takeTurn(e) {
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
                 winnerPlayer = player2Name
-                highscoreTablePlayer = document.getElementById("hsrow1col1")
-                highscoreTablePlayer.innerText = winnerPlayer
+                //highscoreTablePlayer = document.getElementById("hsrow1col1")
+                //highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player2Name} is the Winner!`)
             }
 
@@ -129,11 +129,11 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
 }
 
 // Find and store highscore
-if ((player1score < player2score) ||
-    (player2score < player1score)) {
-    highscore = maxScore - totalScore
-    highscoreTableScore = document.getElementById("hsrow1col2")
-    highscoreTableScore.innerText = highscore
+//if ((player1score < player2score) ||
+//    (player2score < player1score)) {
+//    highscore = maxScore - totalScore
+//    highscoreTableScore = document.getElementById("hsrow1col2")
+//    highscoreTableScore.innerText = highscore
 
 
 // reset's game when reset button clicked
@@ -173,6 +173,8 @@ function horizontalWinner(){
         }
     }
 }
+
+module.exports = { horizontalWinner };
 
 // check 4 slots in a column = winner
 function verticalWinner(){
@@ -215,4 +217,3 @@ function diagonalDownWinner(){
         }
     }
 }
-    }
