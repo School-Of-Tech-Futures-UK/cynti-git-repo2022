@@ -2,7 +2,7 @@
   "name": "cynti-git-repo2022",
   "version": "1.0.0",
   "description": "",
-  "main": "connect4_code.js",
+  "main": "connect4_server.js",
   "scripts": {
     "test": "jest"
   },
@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/School-Of-Tech-Futures-UK/cynti-git-repo2022#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "jest": "^27.4.7"
