@@ -70,7 +70,6 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
             displayCurrentPlayerName.textContent = player2Name
-            console.log(`${player1Name} score is ${player1score}`)
 
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
                 win = true
@@ -86,7 +85,6 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
             displayCurrentPlayerName.textContent = player1Name
-            console.log(`${player2Name} score is ${player2score}`)
 
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
@@ -96,7 +94,7 @@ function takeTurn(e) {
                 return alert(`${player2Name} is the Winner!`)
             }
 
-        } else if (maxTurn === turn) {
+        } else if (turn === 42) {
             player = "Nobody"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'blue'
