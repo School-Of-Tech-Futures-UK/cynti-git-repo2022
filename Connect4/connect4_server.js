@@ -15,7 +15,7 @@ server.post('/highscore', (req, res) => {
     player.push(req.body)
     console.log(req)  
     res.status(200)
-    res.send('Cheers')
+    res.send('Server is working')
 })
 
 server.listen(3201)

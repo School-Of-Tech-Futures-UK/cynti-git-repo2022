@@ -5,21 +5,23 @@
 
 
 // Declare selectors and variables
-const result = document.getElementById('result')
-const row = document.getElementsByClassName('row')
 let player = "red"
 let player1Name
 let player2Name
 let win = false
-let turn = 0
 let winnerPlayer
+let winnerPlayerColour
+let turn = 0
+let highscore = 0
+let maxTurn = 42
+
 let highscoreTablePlayer
 let highscoreTableScore
-let highscore = 0
 let player1score = 0
 let player2score = 0
 let totalScore = player1score + player2score
-let maxTurn = 42
+const result = document.getElementById('result')
+const row = document.getElementsByClassName('row')
 
 const displayCurrentPlayer = document.getElementById('current-player')
 displayCurrentPlayer.textContent = player
@@ -33,13 +35,13 @@ while (!player1Name) {
     }
 
 displayCurrentPlayerName.textContent = player1Name
-console.log(player1Name)
+console.log(`Player 1 is ${player1Name}`)
 
 // alert pop-up will prompt for player 2 name until completed
 while (!player2Name) {
     player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
-console.log(player2Name)
+console.log(`Player 2 is ${player2Name}`)
 
 
 let grid = [
@@ -79,6 +81,8 @@ function takeTurn(e) {
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
                 win = true
                 winnerPlayer = player1Name
+                winnerPlayerColour = 'red'
+                highscore = maxTurn - (turn + 1)
                 //highscoreTablePlayer = document.getElementById("hsrow1col1")
                 //highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player1Name} is the Winner!`)
@@ -96,6 +100,8 @@ function takeTurn(e) {
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
                 win = true
                 winnerPlayer = player2Name
+                winnerPlayerColour = 'yellow'
+                highscore = maxTurn - (turn + 1)
                 //highscoreTablePlayer = document.getElementById("hsrow1col1")
                 //highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player2Name} is the Winner!`)

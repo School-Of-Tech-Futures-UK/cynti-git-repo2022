@@ -1,22 +1,15 @@
+// To-Do's:
+// order new highscore lists by ascending highscore
+
 const getHighscore = async () => {
     const resp = await fetch('http://localhost:3201/highscore')
     return await resp.json()
 }
 
-getHighscore().then(
-    json => json.forEach(player => {
-        const listElement = document.createElement('li')
-        listElement.innerHTML = `Player: ${player.name}`
-        document.getElementById('highscore').appendChild(listElement)
-    }
-    )
-)
-
-
-const addPlayer = async (e) => {
-    const name = document.getElementById('playername').value
-    const colour = document.getElementById('colour').value
-    const score = document.getElementById('score').value
+const updateHighscore = async (e) => {
+    const name = winnerPlayer
+    const colour = winnerPlayerColour
+    const score = highscore
 
     const player = JSON.stringify(
         {
@@ -33,14 +26,13 @@ const addPlayer = async (e) => {
     })
 
     document.getElementById('highscore').innerHTML = ''
-    getHighscore(
+
+    getHighscore().then(
         json => json.forEach(player => {
-            const listElement = document.createElement('li')
-            listElement.innerHTML = `Player: ${player.name}`
-            document.getElementById('highscore').appendChild(listElement)
+            const listItem = document.createElement('li')
+            listItem.innerHTML = `Player: ${player.name}, ${player.colour}, ${player.score}`
+            document.getElementById('highscore').appendChild(listItem)
         }
         )
     )
-
-
 }

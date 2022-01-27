@@ -84,12 +84,16 @@
     <div class="reset">
         <div>
             <button type="button" name="button" id="reset-button" onClick="resetGame()">Start Again</button>
+            <button type="button" name="button" id="update-highscore" onClick="updateHighscore(event)">Update Highscore</button>
         </div>
     </div>
 
-   <p id="score-title">** TOP 3 HIGHSCORES **</p>
-    <div class="scoreboard">
-        <table>
+   <p id="score-title">** TOP HIGHSCORES **</p>
+
+   <ul id="highscore"></ul>
+
+    <!-- <div>
+        <table id="highscore">
             <tr class="score-row">
                 <td class="score-column" id="hscore1">hello</td>
             </tr>
@@ -102,10 +106,9 @@
                 <td class="score-column" id="hscore3">hello</td>
             </tr>
         </table>
-    </div>
+    </div> -->
 
-    <ul id="highscore"> </ul>
-    <table>
+    <!-- <table>
         <tr>
             <th>Player Name:</th>
             <td><input type="text" id="playername" /></td>
@@ -117,13 +120,13 @@
         <tr>
             <td>Score:</td>
             <td><input type="number" id="score" /></td>
-        </tr>
+        </tr> -->
 
-        <tr>
+        <!-- <tr>
             <td></td>
-            <td><button onclick="addPlayer(event)">Add Player!</button></td>
-        </tr>
-    </table>
+            <td><button onclick="addPokemon(event)">Add Player!</button></td>
+        </tr> -->
+    <!-- </table> -->
     
     <script src="connect4_code.js"></script>
     <script src="connect4_client.js"></script>
