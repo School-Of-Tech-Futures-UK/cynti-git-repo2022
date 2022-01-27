@@ -174,8 +174,6 @@ function horizontalWinner(){
     }
 }
 
-module.exports = { horizontalWinner };
-
 // check 4 slots in a column = winner
 function verticalWinner(){
     for(let r = 0; r < 4; r++) {

@@ -1,18 +1,21 @@
 const express = require('express')
 const server = express()
 server.use(express.json())
+
 var cors = require('cors')
-forapi.use(cors())
+server.use(cors())
+
+const player = []
+
+server.get('/highscore', (req, res) => {
+    res.json(player)
+})
 
 server.post('/highscore', (req, res) => {
-    const sum = req.body.number[0] + req.body.number[1]
-    if (!isNaN(sum)) {
-        res.send(`The sum of numbers = ${sum}`)
-    } else {
-        res.send(`That's not a valid number`)
-        res.status(404)
-    }
+    player.push(req.body)
+    console.log(req)  
+    res.status(200)
+    res.send('Cheers')
 })
- 
-server.listen(3101)
 
+server.listen(3201)

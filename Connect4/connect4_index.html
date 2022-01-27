@@ -87,27 +87,46 @@
         </div>
     </div>
 
-    <p id="score-title">** TOP 3 HIGHSCORES **</p>
+   <p id="score-title">** TOP 3 HIGHSCORES **</p>
     <div class="scoreboard">
         <table>
             <tr class="score-row">
-                <td class="score-column" id="hsrow1col1">hello</td>
-                <td class="score-column" id="hsrow1col2">hello</td>
+                <td class="score-column" id="hscore1">hello</td>
             </tr>
 
             <tr class="score-row">
-                <td class="score-column" id="hsrow2col1">hello</td>
-                <td class="score-column" id="hsrow2col2">hello</td>
+                <td class="score-column" id="hscore2">hello</td>
             </tr>
 
             <tr class="score-row">
-                <td class="score-column" id="hsrow3col1">hello</td>
-                <td class="score-column" id="hsrow3col2">hello</td>
+                <td class="score-column" id="hscore3">hello</td>
             </tr>
         </table>
     </div>
+
+    <ul id="highscore"> </ul>
+    <table>
+        <tr>
+            <th>Player Name:</th>
+            <td><input type="text" id="playername" /></td>
+        </tr>
+        <tr>
+            <td>Colour:</td>
+            <td><input type="text" id="colour" /></td>
+        </tr>
+        <tr>
+            <td>Score:</td>
+            <td><input type="number" id="score" /></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><button onclick="addPlayer(event)">Add Player!</button></td>
+        </tr>
+    </table>
     
     <script src="connect4_code.js"></script>
+    <script src="connect4_client.js"></script>
 
 </body>
 
