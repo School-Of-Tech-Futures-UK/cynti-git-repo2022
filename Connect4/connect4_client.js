@@ -1,5 +1,6 @@
 // To-Do's:
 // order new highscore lists by ascending highscore
+// only show top 10 highscores
 
 const getHighscore = async () => {
     const resp = await fetch('http://localhost:3201/highscore')
@@ -30,7 +31,7 @@ const updateHighscore = async (e) => {
     getHighscore().then(
         json => json.forEach(player => {
             const listItem = document.createElement('li')
-            listItem.innerHTML = `Player: ${player.name}, ${player.colour}, ${player.score}`
+            listItem.innerHTML = `Player: ${player.name}, Colour: ${player.colour}, Highscore: ${player.score}`
             document.getElementById('highscore').appendChild(listItem)
         }
         )

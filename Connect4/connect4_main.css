@@ -38,25 +38,8 @@
     font-size: 300%;
 }
 
-.scoreboard {
-    background-color: lightsteelblue;
-    width: 500px;
-    height: 300px;
-    justify-content: center;
-    border: black 5px dotted;
-    margin: auto;
-    padding: 0px;
-    display: flex;
-}
-
-.score-row {
-    margin: auto;
-    padding: 10%;
-}
-
-.score-column {
-    border: black 1px solid;
-    width: 240px;
-    background: lightyellow;
+#highscore {
     text-align: center;
+    font-size: 200%;
+    list-style-type: none;
 }

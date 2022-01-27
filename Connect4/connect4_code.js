@@ -15,11 +15,6 @@ let turn = 0
 let highscore = 0
 let maxTurn = 42
 
-let highscoreTablePlayer
-let highscoreTableScore
-let player1score = 0
-let player2score = 0
-let totalScore = player1score + player2score
 const result = document.getElementById('result')
 const row = document.getElementsByClassName('row')
 
@@ -75,7 +70,6 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'yellow'
             displayCurrentPlayerName.textContent = player2Name
-            player1score ++
             console.log(`${player1Name} score is ${player1score}`)
 
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
@@ -83,8 +77,6 @@ function takeTurn(e) {
                 winnerPlayer = player1Name
                 winnerPlayerColour = 'red'
                 highscore = maxTurn - (turn + 1)
-                //highscoreTablePlayer = document.getElementById("hsrow1col1")
-                //highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player1Name} is the Winner!`)
             }
         } else if (player === 'yellow') {
@@ -94,7 +86,6 @@ function takeTurn(e) {
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'red'
             displayCurrentPlayerName.textContent = player1Name
-           player2score ++
             console.log(`${player2Name} score is ${player2score}`)
 
             if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
@@ -102,15 +93,14 @@ function takeTurn(e) {
                 winnerPlayer = player2Name
                 winnerPlayerColour = 'yellow'
                 highscore = maxTurn - (turn + 1)
-                //highscoreTablePlayer = document.getElementById("hsrow1col1")
-                //highscoreTablePlayer.innerText = winnerPlayer
                 return alert(`${player2Name} is the Winner!`)
             }
 
-        } else if (turn === 42) {
+        } else if (maxTurn === turn) {
             player = "Nobody"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'blue'
+            displayCurrentPlayerName.textContent = player
             winnerPlayer = null
             return (alert('It\'s a Tie!'))
         } else {
@@ -118,8 +108,6 @@ function takeTurn(e) {
         }
     }
 
-    //console.log(`You clicked column ${colNum}`)
-    //console.log(grid)
     console.log(`This is turn no: ${turn}`)
 }
 
@@ -133,14 +121,6 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
 
     return null;
 }
-
-// Find and store highscore
-//if ((player1score < player2score) ||
-//    (player2score < player1score)) {
-//    highscore = maxScore - totalScore
-//    highscoreTableScore = document.getElementById("hsrow1col2")
-//    highscoreTableScore.innerText = highscore
-
 
 // reset's game when reset button clicked
 document.getElementById('reset-button').onclick = () => {
