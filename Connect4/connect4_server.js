@@ -6,7 +6,7 @@ server.use(express.json())
 var cors = require('cors')
 server.use(cors())
 
-let player = []
+let player
 
 async function loadPlayers () {
     const contents = await fs.readFile('./highscores.json', 'utf-8')
@@ -19,12 +19,11 @@ async function loadPlayers () {
     await fs.writeFile('./highscores.json', contents)
   }
 
-
- loadPlayers()
-
 server.get('/highscore', (req, res) => {
     res.json(player.slice(0, 10))
 })
+
+loadPlayers()
 
 server.post('/highscore', (req, res) => {
     const data = req.body
@@ -33,7 +32,7 @@ server.post('/highscore', (req, res) => {
         return b.player - a.player
     })
     savePlayers(player)
-    console.log(req)  
+    // console.log(req)  
     res.status(200)
     res.send('Server is working')
 })
