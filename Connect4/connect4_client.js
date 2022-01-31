@@ -1,7 +1,3 @@
-// To-Do's:
-// order new highscore lists by ascending highscore
-// only show top 10 highscores
-
 const getHighscore = async () => {
     const resp = await fetch('http://localhost:3201/highscore')
     return await resp.json()

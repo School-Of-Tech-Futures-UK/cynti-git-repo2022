@@ -1,3 +1,6 @@
+// To-Do's:
+// order new highscore lists by ascending highscore
+
 const fs = require('fs').promises
 const express = require('express')
 const server = express()
@@ -29,7 +32,7 @@ server.post('/highscore', (req, res) => {
     const data = req.body
     player.push(data)
     player.sort((a, b) => {
-        return b.player - a.player
+        return b.score - a.score
     })
     savePlayers(player)
     // console.log(req)  

@@ -1,4 +1,4 @@
-const horizontalWinnerModule = require('./connect4_code');
+const horizontalWinnerModule = require('./connect4_pure');
 
 // horizontalWinner() test
 describe('when 4 consecutive horizontal slots are placed', () => {
