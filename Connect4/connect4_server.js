@@ -1,6 +1,3 @@
-// To-Do's:
-// order new highscore lists by ascending highscore
-
 const fs = require('fs').promises
 const express = require('express')
 const server = express()

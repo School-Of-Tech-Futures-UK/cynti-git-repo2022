@@ -43,6 +43,7 @@ let grid = [
     [null, null, null, null, null, null, null]
 ]
 
+
 // takes a turn based on user clicking a slot
 function takeTurn(e) {
     const id = e.target.id   // 'row1-col1' // 'rowY-colX' 
@@ -91,19 +92,20 @@ function takeTurn(e) {
                 return alert(`${player2Name} is the Winner!`)
             }
 
-        } else if (turn === 42) {
+        } else if (turn === 42 && win === false) {
+            console.log("it's nobody")
             player = "Nobody"
             displayCurrentPlayer.textContent = player
             displayCurrentPlayer.style.backgroundColor = 'blue'
             displayCurrentPlayerName.textContent = player
             winnerPlayer = null
-            result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
+            result.textContent = "No One Wins :("
             return (alert('It\'s a Tie!'))
-        } else {
-            return null
         }
-    }
-    console.log(`This is turn no: ${turn}`)
+        console.log(`This is turn no: ${turn}`)
+        console.log(`${win}`)
+
+    } return null
 }
 
 // find the lowest available empty slot in a column and row
