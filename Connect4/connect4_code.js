@@ -1,7 +1,5 @@
 // Bugs to fix:
 // 2) Nobody winner not declaring yet
-// 3) create button for new players to play when game resets
-
 
 // Declare selectors and variables
 let player = "red"
