@@ -1,7 +1,6 @@
 // Bugs to fix:
-// 1) verticalWinner() doesn't work if win starts from bottom row
 // 2) Nobody winner not declaring yet
-// 3) playername doesnt reset to blank prompt alert
+// 3) create button for new players to play when game resets
 
 
 // Declare selectors and variables
@@ -16,7 +15,6 @@ let highscore = 0
 let maxTurn = 42
 
 const result = document.getElementById('result')
-const row = document.getElementsByClassName('row')
 
 const displayCurrentPlayer = document.getElementById('current-player')
 displayCurrentPlayer.textContent = player
@@ -29,15 +27,12 @@ while (!player1Name) {
     player1Name = prompt('Player One (RED): Enter your name')
     }
 
-displayCurrentPlayerName.textContent = player1Name
-console.log(`Player 1 is ${player1Name}`)
-
 // alert pop-up will prompt for player 2 name until completed
 while (!player2Name) {
     player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
-console.log(`Player 2 is ${player2Name}`)
 
+displayCurrentPlayerName.textContent = player1Name
 
 let grid = [
     [null, null, null, null, null, null, null],
@@ -76,6 +71,7 @@ function takeTurn(e) {
                 winnerPlayer = player1Name
                 winnerPlayerColour = 'red'
                 highscore = maxTurn - (turn + 1)
+                result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
                 return alert(`${player1Name} is the Winner!`)
             }
         } else if (player === 'yellow') {
@@ -91,6 +87,7 @@ function takeTurn(e) {
                 winnerPlayer = player2Name
                 winnerPlayerColour = 'yellow'
                 highscore = maxTurn - (turn + 1)
+                result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
                 return alert(`${player2Name} is the Winner!`)
             }
 
@@ -100,12 +97,12 @@ function takeTurn(e) {
             displayCurrentPlayer.style.backgroundColor = 'blue'
             displayCurrentPlayerName.textContent = player
             winnerPlayer = null
+            result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
             return (alert('It\'s a Tie!'))
         } else {
             return null
         }
     }
-
     console.log(`This is turn no: ${turn}`)
 }
 
@@ -131,10 +128,10 @@ document.getElementById('reset-button').onclick = () => {
             [null, null, null, null, null, null, null]
         ]
         player = 'red'
+        turn = 0
         win = false
-        displayCurrentPlayer.textContent = player
-        displayCurrentPlayer.style.backgroundColor = 'red'
-
+        displayCurrentPlayer.textContent = null
+        displayCurrentPlayer.style.backgroundColor = null
         displayCurrentPlayerName.textContent = null
 
         let oldGrid = document.getElementsByClassName('col')
@@ -160,7 +157,7 @@ function horizontalWinner(){
 
 // check 4 slots in a column = winner
 function verticalWinner(){
-    for(let r = 0; r < 4; r++) {
+    for(let r = 0; r < 3; r++) {
         for (let c = 0; c < 7; c++) {
             if(
                 (grid[r][c] === 'red' && grid[r+1][c] === 'red' && grid[r+2][c] === 'red' && grid[r+3][c] === 'red') ||
