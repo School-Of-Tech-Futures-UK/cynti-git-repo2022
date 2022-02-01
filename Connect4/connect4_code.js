@@ -1,110 +1,44 @@
-// Bugs to fix:
-// 2) Nobody winner not declaring yet
+// BUSINESS LOGIC
 
-// Declare selectors and variables
-let player = "red"
-let player1Name
-let player2Name
-let win = false
-let winnerPlayer
-let winnerPlayerColour
-let turn = 0
-let highscore = 0
-let maxTurn = 42
+// Declare gamestate
+const gameState = {
+    player: 'red',
+    maxTurn: 42,
+    turn: 0,
+    winnerPlayer: '',
+    winnerPlayerColour: '',
+    player1Name: '',
+    player2Name: '',
+    gameOver: false,
+    highscore: 0,
+    win: null,
+    grid: [
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null]
+    ]
+  }
 
-const result = document.getElementById('result')
 
-const displayCurrentPlayer = document.getElementById('current-player')
-displayCurrentPlayer.textContent = player
-displayCurrentPlayer.style.backgroundColor = 'red'
+// -----------------------------PURE LAYER-----------------------------
 
-const displayCurrentPlayerName = document.getElementById('current-player-name')
-
-// alert pop-up will prompt for player 1 name until completed
-while (!player1Name) {
-    player1Name = prompt('Player One (RED): Enter your name')
+// Take the row and column number and update the game state.
+function takeTurn (row, column) {
+    if (gameState.gameOver === false && row !== null) {
+      gameState.turn++
+      gameState.grid[row][column] = gameState.player
+      if (gameState.player === 'red') {
+        gameState.player = 'yellow'
+        return gameState.player
+      } else if (gameState.player === 'yellow') {
+        gameState.player = 'red'
+        return gameState.player
+      }
     }
-
-// alert pop-up will prompt for player 2 name until completed
-while (!player2Name) {
-    player2Name = prompt('Player Two (YELLOW): Enter your name')
-}
-
-displayCurrentPlayerName.textContent = player1Name
-
-let grid = [
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null]
-]
-
-
-// takes a turn based on user clicking a slot
-function takeTurn(e) {
-    const id = e.target.id   // 'row1-col1' // 'rowY-colX' 
-    //console.log(`id is: ${id}`)
-
-    const rowNum = id[3]
-    const colNum = id[8]
-
-    const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, grid)
-    //console.log(`Lowest available row: ${lowestAvailableRow}`)
-
-    if (lowestAvailableRow !== null && win === false) {
-
-        turn++
-
-        if (player === "red") {
-            grid[lowestAvailableRow][colNum - 1] = "red"
-            document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'red';
-            player = "yellow"
-            displayCurrentPlayer.textContent = player
-            displayCurrentPlayer.style.backgroundColor = 'yellow'
-            displayCurrentPlayerName.textContent = player2Name
-
-            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
-                win = true
-                winnerPlayer = player1Name
-                winnerPlayerColour = 'red'
-                highscore = maxTurn - (turn + 1)
-                result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
-                return alert(`${player1Name} is the Winner!`)
-            }
-        } else if (player === 'yellow') {
-            grid[lowestAvailableRow][colNum - 1] = "yellow"
-            document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'yellow';
-            player = "red"
-            displayCurrentPlayer.textContent = player
-            displayCurrentPlayer.style.backgroundColor = 'red'
-            displayCurrentPlayerName.textContent = player1Name
-
-            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
-                win = true
-                winnerPlayer = player2Name
-                winnerPlayerColour = 'yellow'
-                highscore = maxTurn - (turn + 1)
-                result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
-                return alert(`${player2Name} is the Winner!`)
-            }
-
-        } else if (turn === 42 && win === false) {
-            console.log("it's nobody")
-            player = "Nobody"
-            displayCurrentPlayer.textContent = player
-            displayCurrentPlayer.style.backgroundColor = 'blue'
-            displayCurrentPlayerName.textContent = player
-            winnerPlayer = null
-            result.textContent = "No One Wins :("
-            return (alert('It\'s a Tie!'))
-        }
-        console.log(`This is turn no: ${turn}`)
-        console.log(`${win}`)
-
-    } return null
-}
+  }
 
 // find the lowest available empty slot in a column and row
 function getLowestAvailableRowInColumn(columnNumber, myGrid) {
@@ -113,86 +47,127 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
             return i
         }
     }
-
-    return null;
-}
-
-// reset's game when reset button clicked
-document.getElementById('reset-button').onclick = () => {
-        grid = [
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null]
-        ]
-        player = 'red'
-        turn = 0
-        win = false
-        displayCurrentPlayer.textContent = null
-        displayCurrentPlayer.style.backgroundColor = null
-        displayCurrentPlayerName.textContent = null
-
-        let oldGrid = document.getElementsByClassName('col')
-        for (x of oldGrid) {
-            x.style.backgroundColor = 'white';
-            console.log('resetGame was called')
-        }  
-    }
-
-// check 4 slots in a row = winner
-function horizontalWinner(){
-    for(let r = 0; r < 6; r++) {
-        for (let c = 0; c < 4; c++) {
-            if(
-                (grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') ||
-                (grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow')
-             ) {
-                return true
-            }
-        }
-    }
+    return null
 }
 
 // check 4 slots in a column = winner
-function verticalWinner(){
+function verticalWinner(grid){
     for(let r = 0; r < 3; r++) {
         for (let c = 0; c < 7; c++) {
             if(
                 (grid[r][c] === 'red' && grid[r+1][c] === 'red' && grid[r+2][c] === 'red' && grid[r+3][c] === 'red') ||
                 (grid[r][c] === 'yellow' && grid[r+1][c] === 'yellow' && grid[r+2][c] === 'yellow' && grid[r+3][c] === 'yellow')
              ) {
-                return true
+                gameState.gameOver = true
+                gameState.win = player
+                return gameState.win
             }
         }
     }
+    gameState.gameOver = false
+    return null
+}
+
+// check 4 slots in a row = winner
+function horizontalWinner(grid){
+    for(let r = 0; r < 6; r++) {
+        for (let c = 0; c < 4; c++) {
+            if(
+                (grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') ||
+                (grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow')
+             ) {
+                gameState.gameOver = true
+                gameState.win = player
+                return gameState.win
+            }
+        }
+    }
+    gameState.gameOver = false
+    return null
 }
 
 // check 4 slots upward diagonal = winner
-function diagonalUpWinner(){
+function diagonalUpWinner(grid){
     for(let r = 0; r < 3; r++) {
         for (let c = 0; c < 7; c++) {
             if(
                 (grid[r][c] === 'red' && grid[r+1][c+1] === 'red' && grid[r+2][c+2] === 'red' && grid[r+3][c+3] === 'red') ||
                 (grid[r][c] === 'yellow' && grid[r+1][c+1] === 'yellow' && grid[r+2][c+2] === 'yellow' && grid[r+3][c+3] === 'yellow')
              ) {
-                return true
+                gameState.gameOver = true
+                gameState.win = player
+                return gameState.win
             }
         }
     }
+    gameState.gameOver = false
+    return null
 }
 
 // check 4 slots downward diagonal = winner
-function diagonalDownWinner(){
+function diagonalDownWinner(grid){
     for(let r = 0; r < 3; r++) {
         for (let c = 7; c > 2; c--) {
             if(
                 (grid[r][c] === 'red' && grid[r+1][c-1] === 'red' && grid[r+2][c-2] === 'red' && grid[r+3][c-3] === 'red') ||
                 (grid[r][c] === 'yellow' && grid[r+1][c-1] === 'yellow' && grid[r+2][c-2] === 'yellow' && grid[r+3][c-3] === 'yellow')
              ) {
-                return true
+                gameState.gameOver = true
+                gameState.win = player
+                return gameState.win
             }
         }
     }
+    gameState.gameOver = false
+    return null
+}
+
+// check for no winners (when whole board is full ie turn = 42)
+function nobodyWinner(gameState.turn, gameState.maxTurn) {
+    if (gameState.turn === gameState.maxTurn) {
+        gameState.gameOver = true
+        gameState.win = 'nobody'
+        return gameState.win
+      }
+    gameState.gameOver = false
+    return null
+}
+
+// updates and returns current grid of gameState
+function getBoard () {
+    return gameState.grid
+  }
+
+// resets gameState keys for a new game (with same player names though as last game)
+  function resetGame () {
+    gameState.grid = [
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null]
+    ],
+    gameState.player = 'red',
+    gameState.turn = 0,
+    gameState.winnerPlayer = '',
+    gameState.winnerPlayerColour = '',
+    gameState.gameOver = false,
+    gameState.highscore = 0,
+    gameState.win = null,
+    console.log('resetGame was called')
+  }
+
+// Pure functions/objects to be exported for testing in separate test file
+module.exports = {
+    gameState,
+    takeTurn,
+    getLowestAvailableRowInColumn,
+    verticalWinner,
+    horizontalWinner,
+    diagonalDownWinner,
+    diagonalUpWinner,
+    nobodyWinner,
+    getBoard,
+    resetGame
 }
