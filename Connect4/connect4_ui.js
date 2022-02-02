@@ -38,20 +38,21 @@ function playerClick(e) {
     console.log(`lowest row:${lowestAvailableRow} & column:${colNum}`)
 
     // alternate player name + colour + slot colour per click on grid
-    displayCurrentPlayerColour.textContent = gameState.player
-    //(gameState.player === 'red') ? 'red' : 'yellow'
-    displayCurrentPlayerColour.style.backgroundColor = gameState.player
-    displayCurrentPlayerName.textContent = (gameState.player === 'red') ? gameState.player1Name : gameState.player2Name
+    displayCurrentPlayerName.textContent = gameState.player === 'red' ? gameState.player1Name : gameState.player2Name
+    
+    displayCurrentPlayerColour.textContent = gameState.player === 'red' ? gameState.player : 'yellow'
+    
+    displayCurrentPlayerColour.style.backgroundColor = gameState.player === 'red' ? gameState.player : 'yellow'
 
-    //gameState.grid[lowestAvailableRow][colNum - 1] = (gameState.player === 'red') ? 'red' : 'yellow'
-    document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = (gameState.player === 'red') ? 'red' : 'yellow'
-
+    // alternate player colour placement per slot change
+    //gameState.grid[lowestAvailableRow][colNum - 1] = gameState.player ? gameState.player : 'yellow'
+    
+    //document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = gameState.player
 
     // checks winner functions and returns a winner
     const winner = (verticalWinner(gameState.grid) || horizontalWinner(gameState.grid) || diagonalDownWinner(gameState.grid) || diagonalUpWinner(gameState.grid) || nobodyWinner(gameState.grid))
    
     if (winner !== null) {
-      gameState.highscore += (gameState.maxTurn - gameState.turn)
       if (winner === 'red') {
         gameState.winnerPlayer = gameState.player1Name
         result.textContent = `WINNER: ${gameState.winnerPlayer} (${gameState.winnerPlayerColour})`
@@ -77,6 +78,7 @@ function playerClick(e) {
     }
     console.log(`This is turn no: ${gameState.turn}`)
     console.log(gameState.grid)
+    console.log(`highest score: ${gameState.highscore}`)
 }
 
 

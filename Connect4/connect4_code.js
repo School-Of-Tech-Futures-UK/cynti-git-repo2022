@@ -28,6 +28,7 @@ const gameState = {
 function takeTurn (row, column) {
     if (gameState.gameOver === false && row !== null) {
       gameState.turn++
+      gameState.highscore = gameState.maxTurn - gameState.turn
       gameState.grid[row][column] = gameState.player
       if (gameState.player === 'red') {
         gameState.player = 'yellow'
