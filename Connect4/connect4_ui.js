@@ -23,7 +23,6 @@ while (!gameState.player2Name) {
     gameState.player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
 
-
 // Display initial player 1's name and colour in the player turn sub-header on the screen
 displayCurrentPlayerName.textContent = gameState.player1Name
 displayCurrentPlayerColour.textContent = 'red'
@@ -39,12 +38,14 @@ function playerClick(e) {
     console.log(`lowest row:${lowestAvailableRow} & column:${colNum}`)
 
     // alternate player name + colour + slot colour per click on grid
-    displayCurrentPlayerColour.textContent = (gameState.player === 'red') ? 'yellow' : 'red'
-    displayCurrentPlayerColour.style.backgroundColor = !gameState.player
-    displayCurrentPlayerName.textContent = (gameState.player === 'red') ? gameState.player2Name : gameState.player1Name
+    displayCurrentPlayerColour.textContent = gameState.player
+    //(gameState.player === 'red') ? 'red' : 'yellow'
+    displayCurrentPlayerColour.style.backgroundColor = gameState.player
+    displayCurrentPlayerName.textContent = (gameState.player === 'red') ? gameState.player1Name : gameState.player2Name
 
     //gameState.grid[lowestAvailableRow][colNum - 1] = (gameState.player === 'red') ? 'red' : 'yellow'
     document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = (gameState.player === 'red') ? 'red' : 'yellow'
+
 
     // checks winner functions and returns a winner
     const winner = (verticalWinner(gameState.grid) || horizontalWinner(gameState.grid) || diagonalDownWinner(gameState.grid) || diagonalUpWinner(gameState.grid) || nobodyWinner(gameState.grid))
@@ -75,6 +76,7 @@ function playerClick(e) {
     
     }
     console.log(`This is turn no: ${gameState.turn}`)
+    console.log(gameState.grid)
 }
 
 

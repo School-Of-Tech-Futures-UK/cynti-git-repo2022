@@ -1,4 +1,11 @@
-const horizontalWinnerModule = require('./connect4_pure');
+const { takeTurn,
+getLowestAvailableRowInColumn,
+verticalWinner,
+horizontalWinner,
+diagonalDownWinner,
+diagonalUpWinner,
+nobodyWinner,
+resetGame } = require('./connect4_code');
 
 // horizontalWinner() test
 describe('when 4 consecutive horizontal slots are placed', () => {

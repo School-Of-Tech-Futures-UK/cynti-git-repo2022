@@ -42,7 +42,7 @@ function takeTurn (row, column) {
 // find the lowest available empty slot in a column and row
 function getLowestAvailableRowInColumn(columnNumber, myGrid) {
     for (let i = 5; i >= 0; i--) {
-        if (myGrid[i][columnNumber - 1] === null) {
+        if (myGrid[i][columnNumber] === null) {
             return i
         }
     }
@@ -163,14 +163,16 @@ function nobodyWinner() {
   }
 
 // Pure functions/objects to be exported for testing in separate test file
-// module.exports = {
-//     gameState,
-//     takeTurn,
-//     getLowestAvailableRowInColumn,
-//     verticalWinner,
-//     horizontalWinner,
-//     diagonalDownWinner,
-//     diagonalUpWinner,
-//     nobodyWinner,
-//     resetGame
-// }
+if (typeof module !== 'undefined') {
+    module.exports = {
+        //gameState,
+        takeTurn,
+        getLowestAvailableRowInColumn,
+        verticalWinner,
+        horizontalWinner,
+        diagonalDownWinner,
+        diagonalUpWinner,
+        nobodyWinner,
+        resetGame
+    }
+} 
