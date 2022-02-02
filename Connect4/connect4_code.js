@@ -1,5 +1,7 @@
 // BUSINESS LOGIC
 
+// -----------------------------PURE LAYER-----------------------------
+
 // Declare gamestate
 const gameState = {
     player: 'red',
@@ -22,10 +24,7 @@ const gameState = {
     ]
   }
 
-
-// -----------------------------PURE LAYER-----------------------------
-
-// Take the row and column number and update the game state.
+// Take the row and column number and update the game state and alternates player turn
 function takeTurn (row, column) {
     if (gameState.gameOver === false && row !== null) {
       gameState.turn++
@@ -59,7 +58,9 @@ function verticalWinner(grid){
                 (grid[r][c] === 'yellow' && grid[r+1][c] === 'yellow' && grid[r+2][c] === 'yellow' && grid[r+3][c] === 'yellow')
              ) {
                 gameState.gameOver = true
-                gameState.win = player
+                gameState.win = gameState.player
+                gameState.winnerPlayer = gameState.player
+                gameState.winnerPlayerColour = gameState.player
                 return gameState.win
             }
         }
@@ -77,7 +78,9 @@ function horizontalWinner(grid){
                 (grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow')
              ) {
                 gameState.gameOver = true
-                gameState.win = player
+                gameState.win = gameState.player
+                gameState.winnerPlayer = gameState.player
+                gameState.winnerPlayerColour = gameState.player
                 return gameState.win
             }
         }
@@ -95,7 +98,9 @@ function diagonalUpWinner(grid){
                 (grid[r][c] === 'yellow' && grid[r+1][c+1] === 'yellow' && grid[r+2][c+2] === 'yellow' && grid[r+3][c+3] === 'yellow')
              ) {
                 gameState.gameOver = true
-                gameState.win = player
+                gameState.win = gameState.player
+                gameState.winnerPlayer = gameState.player
+                gameState.winnerPlayerColour = gameState.player
                 return gameState.win
             }
         }
@@ -113,7 +118,9 @@ function diagonalDownWinner(grid){
                 (grid[r][c] === 'yellow' && grid[r+1][c-1] === 'yellow' && grid[r+2][c-2] === 'yellow' && grid[r+3][c-3] === 'yellow')
              ) {
                 gameState.gameOver = true
-                gameState.win = player
+                gameState.win = gameState.player
+                gameState.winnerPlayer = gameState.player
+                gameState.winnerPlayerColour = gameState.player
                 return gameState.win
             }
         }
@@ -123,20 +130,17 @@ function diagonalDownWinner(grid){
 }
 
 // check for no winners (when whole board is full ie turn = 42)
-function nobodyWinner(gameState.turn, gameState.maxTurn) {
+function nobodyWinner() {
     if (gameState.turn === gameState.maxTurn) {
         gameState.gameOver = true
         gameState.win = 'nobody'
+        gameState.winnerPlayer = 'nobody'
+        gameState.winnerPlayerColour = 'blue'
         return gameState.win
       }
     gameState.gameOver = false
     return null
 }
-
-// updates and returns current grid of gameState
-function getBoard () {
-    return gameState.grid
-  }
 
 // resets gameState keys for a new game (with same player names though as last game)
   function resetGame () {
@@ -159,15 +163,14 @@ function getBoard () {
   }
 
 // Pure functions/objects to be exported for testing in separate test file
-module.exports = {
-    gameState,
-    takeTurn,
-    getLowestAvailableRowInColumn,
-    verticalWinner,
-    horizontalWinner,
-    diagonalDownWinner,
-    diagonalUpWinner,
-    nobodyWinner,
-    getBoard,
-    resetGame
-}
+// module.exports = {
+//     gameState,
+//     takeTurn,
+//     getLowestAvailableRowInColumn,
+//     verticalWinner,
+//     horizontalWinner,
+//     diagonalDownWinner,
+//     diagonalUpWinner,
+//     nobodyWinner,
+//     resetGame
+// }

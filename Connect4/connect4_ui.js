@@ -2,100 +2,152 @@
 
 // -----------------------------DIRTY LAYER-----------------------------
 
-// Other selectors and variables
-const result = document.getElementById('result')
-const displayCurrentPlayer = document.getElementById('current-player')
-displayCurrentPlayer.textContent = player
-displayCurrentPlayer.style.backgroundColor = 'red'
-const displayCurrentPlayerName = document.getElementById('current-player-name')
+// Declare HTML selectors and store as variables
+const displayCurrentPlayerColour = document.getElementById('current-player-colour')
+displayCurrentPlayerColour.textContent = ''
+displayCurrentPlayerColour.style.backgroundColor = ''
 
-// alert pop-up will prompt for player 1 name until completed
-while (!player1Name) {
-    player1Name = prompt('Player One (RED): Enter your name')
+const displayCurrentPlayerName = document.getElementById('current-player-name')
+displayCurrentPlayerName.textContent = ''
+
+const result = document.getElementById('result')
+result.textContent = ''
+
+
+// alert pop-up will prompt for players' names until completed
+while (!gameState.player1Name) {
+    gameState.player1Name = prompt('Player One (RED): Enter your name')
     }
 
-// alert pop-up will prompt for player 2 name until completed
-while (!player2Name) {
-    player2Name = prompt('Player Two (YELLOW): Enter your name')
+while (!gameState.player2Name) {
+    gameState.player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
 
-displayCurrentPlayerName.textContent = player1Name
+
+// Display initial player 1's name and colour in the player turn sub-header on the screen
+displayCurrentPlayerName.textContent = gameState.player1Name
+displayCurrentPlayerColour.textContent = 'red'
+displayCurrentPlayerColour.style.backgroundColor = 'red'
 
 
-// takes a turn based on user clicking a slot
-function takeTurn(e) {
-    const id = e.target.id   // 'row1-col1' // 'rowY-colX' 
-    //console.log(`id is: ${id}`)
-
-    const rowNum = id[3]
+// takes a turn based on user clicking a slot and returns a winner if won
+function playerClick(e) {
+    const id = e.target.id // 'row1-col1' ie 'rowY-colX' 
     const colNum = id[8]
+    const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, gameState.grid)
+    takeTurn(lowestAvailableRow, colNum)
+    console.log(`lowest row:${lowestAvailableRow} & column:${colNum}`)
 
-    const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, grid)
-    //console.log(`Lowest available row: ${lowestAvailableRow}`)
+    // alternate player name + colour + slot colour per click on grid
+    displayCurrentPlayerColour.textContent = (gameState.player === 'red') ? 'yellow' : 'red'
+    displayCurrentPlayerColour.style.backgroundColor = !gameState.player
+    displayCurrentPlayerName.textContent = (gameState.player === 'red') ? gameState.player2Name : gameState.player1Name
 
-    if (lowestAvailableRow !== null && win === false) {
+    //gameState.grid[lowestAvailableRow][colNum - 1] = (gameState.player === 'red') ? 'red' : 'yellow'
+    document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = (gameState.player === 'red') ? 'red' : 'yellow'
 
-        turn++
+    // checks winner functions and returns a winner
+    const winner = (verticalWinner(gameState.grid) || horizontalWinner(gameState.grid) || diagonalDownWinner(gameState.grid) || diagonalUpWinner(gameState.grid) || nobodyWinner(gameState.grid))
+   
+    if (winner !== null) {
+      gameState.highscore += (gameState.maxTurn - gameState.turn)
+      if (winner === 'red') {
+        gameState.winnerPlayer = gameState.player1Name
+        result.textContent = `WINNER: ${gameState.winnerPlayer} (${gameState.winnerPlayerColour})`
+        result.style.backgroundColor = gameState.winnerPlayerColour
+        updateHighscore().then(getHighscore)
+        return alert(`${gameState.player1Name} is the Winner!`)
 
-        if (player === "red") {
-            grid[lowestAvailableRow][colNum - 1] = "red"
-            document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'red';
-            player = "yellow"
-            displayCurrentPlayer.textContent = player
-            displayCurrentPlayer.style.backgroundColor = 'yellow'
-            displayCurrentPlayerName.textContent = player2Name
+      } else if (winner === 'yellow') {
+        gameState.winnerPlayer = gameState.player2Name
+        result.textContent = `WINNER: ${gameState.winnerPlayer} (${gameState.winnerPlayerColour})`
+        result.style.backgroundColor = gameState.winnerPlayerColour
+        updateHighscore().then(getHighscore)
+        return alert(`${gameState.player2Name} is the Winner!`)
 
-            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
-                win = true
-                winnerPlayer = player1Name
-                winnerPlayerColour = 'red'
-                highscore = maxTurn - (turn + 1)
-                result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
-                return alert(`${player1Name} is the Winner!`)
-            }
-        } else if (player === 'yellow') {
-            grid[lowestAvailableRow][colNum - 1] = "yellow"
-            document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'yellow';
-            player = "red"
-            displayCurrentPlayer.textContent = player
-            displayCurrentPlayer.style.backgroundColor = 'red'
-            displayCurrentPlayerName.textContent = player1Name
-
-            if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
-                win = true
-                winnerPlayer = player2Name
-                winnerPlayerColour = 'yellow'
-                highscore = maxTurn - (turn + 1)
-                result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
-                return alert(`${player2Name} is the Winner!`)
-            }
-
-        } else if (turn === 42 && win === false) {
-            console.log("it's nobody")
-            player = "Nobody"
-            displayCurrentPlayer.textContent = player
-            displayCurrentPlayer.style.backgroundColor = 'blue'
-            displayCurrentPlayerName.textContent = player
-            winnerPlayer = null
-            result.textContent = "No One Wins :("
-            return (alert('It\'s a Tie!'))
-        }
-        console.log(`This is turn no: ${turn}`)
-        console.log(`${win}`)
-
-    } return null
+      } else if (winner === 'nobody') {
+        gameState.winnerPlayer = 'nobody'
+        result.textContent = `IT\S A TIE: ${gameState.winnerPlayer} won :()`
+        result.style.backgroundColor = 'blue'
+        getHighscore()
+        return alert(`It\s a tie!`)
+      }
+    
+    }
+    console.log(`This is turn no: ${gameState.turn}`)
 }
 
-// reset's game when reset button clicked
-document.getElementById('reset-button').onclick = () => {
-    resetGame()
-    displayCurrentPlayer.textContent = null
-    displayCurrentPlayer.style.backgroundColor = null
-    displayCurrentPlayerName.textContent = null
 
-    let oldGrid = document.getElementsByClassName('col')
-    for (x of oldGrid) {
-        x.style.backgroundColor = 'white';
-        console.log('resetGame was called')
-    }  
-}
+// clears board and reset's game when "start again" button clicked
+function resetBoard (e) {
+      resetGame()
+      displayCurrentPlayerColour.textContent = gameState.player
+      displayCurrentPlayerColour.style.backgroundColor = gameState.player
+      displayCurrentPlayerName.textContent = gameState.player1Name
+      result.textContent = ''
+      result.style.backgroundColor = ''
+
+      let clearedGrid = document.getElementsByClassName('col')
+      for (x of clearedGrid) {
+          x.style.backgroundColor = 'white';
+          console.log('resetGame was called')
+      }  
+  } 
+
+
+
+
+
+
+    //------------------OLD TAKETURN FUNCTION----------------
+    // if (lowestAvailableRow !== null && win === false) {
+
+    //     turn++
+
+    //     if (player === "red") {
+    //         grid[lowestAvailableRow][colNum - 1] = "red"
+    //         document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'red';
+    //         player = "yellow"
+    //         displayCurrentPlayerColour.textContent = player
+    //         displayCurrentPlayerColour.style.backgroundColor = 'yellow'
+    //         displayCurrentPlayerName.textContent = player2Name
+
+    //         if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()) {
+    //             win = true
+    //             winnerPlayer = player1Name
+    //             winnerPlayerColour = 'red'
+    //             highscore = maxTurn - (turn + 1)
+    //             result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
+    //             return alert(`${player1Name} is the Winner!`)
+    //         }
+    //     } else if (player === 'yellow') {
+    //         grid[lowestAvailableRow][colNum - 1] = "yellow"
+    //         document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = 'yellow';
+    //         player = "red"
+    //         displayCurrentPlayerColour.textContent = player
+    //         displayCurrentPlayerColour.style.backgroundColor = 'red'
+    //         displayCurrentPlayerName.textContent = player1Name
+
+    //         if (horizontalWinner() || verticalWinner() || diagonalUpWinner() || diagonalDownWinner()){
+    //             win = true
+    //             winnerPlayer = player2Name
+    //             winnerPlayerColour = 'yellow'
+    //             highscore = maxTurn - (turn + 1)
+    //             result.textContent = `WINNER: ${winnerPlayer} (${winnerPlayerColour})`
+    //             return alert(`${player2Name} is the Winner!`)
+    //         }
+
+    //     } else if (turn === 42 && win === false) {
+    //         console.log("it's nobody")
+    //         player = "Nobody"
+    //         displayCurrentPlayerColour.textContent = player
+    //         displayCurrentPlayerColour.style.backgroundColor = 'blue'
+    //         displayCurrentPlayerName.textContent = player
+    //         winnerPlayer = null
+    //         result.textContent = "No One Wins :("
+    //         return (alert('It\'s a Tie!'))
+    //     }
+    //     console.log(`This is turn no: ${turn}`)
+    //     console.log(`${win}`)
+
+    // } return null

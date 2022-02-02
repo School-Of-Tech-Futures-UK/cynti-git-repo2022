@@ -3,10 +3,10 @@ const getHighscore = async () => {
     return await resp.json()
 }
 
-const updateHighscore = async (e) => {
-    const name = winnerPlayer
-    const colour = winnerPlayerColour
-    const score = highscore
+const updateHighscore = async () => { //removed event handler as now part of UI logic of playerClick()
+    const name = gameState.winnerPlayer
+    const colour = gameState.winnerPlayerColour
+    const score = gameState.highscore
 
     const player = JSON.stringify(
         {
