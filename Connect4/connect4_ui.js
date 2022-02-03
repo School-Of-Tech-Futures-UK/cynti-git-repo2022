@@ -22,8 +22,7 @@ while (!gameState.player1Name) {
 while (!gameState.player2Name) {
     gameState.player2Name = prompt('Player Two (YELLOW): Enter your name')
 }
-
-// Display initial player 1's name and colour in the player turn sub-header on the screen
+// initialise first player as red and player 1 name on screen
 displayCurrentPlayerName.textContent = gameState.player1Name
 displayCurrentPlayerColour.textContent = 'red'
 displayCurrentPlayerColour.style.backgroundColor = 'red'
@@ -34,20 +33,21 @@ function playerClick(e) {
     const id = e.target.id // 'row1-col1' ie 'rowY-colX' 
     const colNum = id[8]
     const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, gameState.grid)
+    document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = gameState.player
     takeTurn(lowestAvailableRow, colNum)
     console.log(`lowest row:${lowestAvailableRow} & column:${colNum}`)
 
     // alternate player name + colour + slot colour per click on grid
     displayCurrentPlayerName.textContent = gameState.player === 'red' ? gameState.player1Name : gameState.player2Name
-    
+
     displayCurrentPlayerColour.textContent = gameState.player === 'red' ? gameState.player : 'yellow'
-    
+
     displayCurrentPlayerColour.style.backgroundColor = gameState.player === 'red' ? gameState.player : 'yellow'
 
-    // alternate player colour placement per slot change
-    //gameState.grid[lowestAvailableRow][colNum - 1] = gameState.player ? gameState.player : 'yellow'
+    console.log(displayCurrentPlayerColour)
+    console.log(displayCurrentPlayerName)
     
-    //document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = gameState.player
+
 
     // checks winner functions and returns a winner
     const winner = (verticalWinner(gameState.grid) || horizontalWinner(gameState.grid) || diagonalDownWinner(gameState.grid) || diagonalUpWinner(gameState.grid) || nobodyWinner(gameState.grid))
@@ -69,7 +69,7 @@ function playerClick(e) {
 
       } else if (winner === 'nobody') {
         gameState.winnerPlayer = 'nobody'
-        result.textContent = `IT\S A TIE: ${gameState.winnerPlayer} won :()`
+        result.textContent = `IT'S A TIE: ${gameState.winnerPlayer} won :()`
         result.style.backgroundColor = 'blue'
         getHighscore()
         return alert(`It\s a tie!`)
