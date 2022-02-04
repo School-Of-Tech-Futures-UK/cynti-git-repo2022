@@ -26,16 +26,14 @@ const gameState = {
 
 // Take the row and column number and update the game state and alternates player turn
 function takeTurn (row, column) {
-    if (gameState.gameOver === false && row !== null) {
+    if (!gameState.gameOver && row !== null) {
       gameState.turn++
       gameState.highscore = gameState.maxTurn - gameState.turn
       gameState.grid[row][column] = gameState.player
       if (gameState.player === 'red') {
         gameState.player = 'yellow'
-        return gameState.player
       } else if (gameState.player === 'yellow') {
         gameState.player = 'red'
-        return gameState.player
       }
     }
   }
@@ -54,59 +52,39 @@ function getLowestAvailableRowInColumn(columnNumber, myGrid) {
 function verticalWinner(grid){
     for(let r = 0; r < 3; r++) {
         for (let c = 0; c < 7; c++) {
-            if(
-                (grid[r][c] === 'red' && grid[r+1][c] === 'red' && grid[r+2][c] === 'red' && grid[r+3][c] === 'red') ||
-                (grid[r][c] === 'yellow' && grid[r+1][c] === 'yellow' && grid[r+2][c] === 'yellow' && grid[r+3][c] === 'yellow')
-             ) {
-                gameState.gameOver = true
-                gameState.win = gameState.player
-                gameState.winnerPlayer = gameState.player
-                gameState.winnerPlayerColour = gameState.player
-                return gameState.win
+            if(grid[r][c] === 'red' && grid[r+1][c] === 'red' && grid[r+2][c] === 'red' && grid[r+3][c] === 'red') {
+                return 'red'
+            } if (grid[r][c] === 'yellow' && grid[r+1][c] === 'yellow' && grid[r+2][c] === 'yellow' && grid[r+3][c] === 'yellow') {
+                return 'yellow'
             }
         }
-    }
-    gameState.gameOver = false
-    return null
+    } return null
 }
 
 // check 4 slots in a row = winner
 function horizontalWinner(grid){
     for(let r = 0; r < 6; r++) {
         for (let c = 0; c < 4; c++) {
-            if(
-                (grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') ||
-                (grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow')
-             ) {
-                gameState.gameOver = true
-                gameState.win = gameState.player
-                gameState.winnerPlayer = gameState.player
-                gameState.winnerPlayerColour = gameState.player
-                return gameState.win
+            if(grid[r][c] === 'red' && grid[r][c+1] === 'red' && grid[r][c+2] === 'red' && grid[r][c+3] === 'red') {
+                return 'red'
+            } if(grid[r][c] === 'yellow' && grid[r][c+1] === 'yellow' && grid[r][c+2] === 'yellow' && grid[r][c+3] === 'yellow') {
+                return 'yellow'
             }
         }
-    }
-    gameState.gameOver = false
-    return null
+    } return null
 }
 
 // check 4 slots upward diagonal = winner
 function diagonalUpWinner(grid){
     for(let r = 0; r < 3; r++) {
         for (let c = 0; c < 7; c++) {
-            if(
-                (grid[r][c] === 'red' && grid[r+1][c+1] === 'red' && grid[r+2][c+2] === 'red' && grid[r+3][c+3] === 'red') ||
-                (grid[r][c] === 'yellow' && grid[r+1][c+1] === 'yellow' && grid[r+2][c+2] === 'yellow' && grid[r+3][c+3] === 'yellow')
-             ) {
-                gameState.gameOver = true
-                gameState.win = gameState.player
-                gameState.winnerPlayer = gameState.player
-                gameState.winnerPlayerColour = gameState.player
-                return gameState.win
+            if(grid[r][c] === 'red' && grid[r+1][c+1] === 'red' && grid[r+2][c+2] === 'red' && grid[r+3][c+3] === 'red') {
+                return 'red'
+            } if(grid[r][c] === 'yellow' && grid[r+1][c+1] === 'yellow' && grid[r+2][c+2] === 'yellow' && grid[r+3][c+3] === 'yellow') {
+                return 'yellow'
             }
         }
     }
-    gameState.gameOver = false
     return null
 }
 
@@ -114,19 +92,13 @@ function diagonalUpWinner(grid){
 function diagonalDownWinner(grid){
     for(let r = 0; r < 3; r++) {
         for (let c = 7; c > 2; c--) {
-            if(
-                (grid[r][c] === 'red' && grid[r+1][c-1] === 'red' && grid[r+2][c-2] === 'red' && grid[r+3][c-3] === 'red') ||
-                (grid[r][c] === 'yellow' && grid[r+1][c-1] === 'yellow' && grid[r+2][c-2] === 'yellow' && grid[r+3][c-3] === 'yellow')
-             ) {
-                gameState.gameOver = true
-                gameState.win = gameState.player
-                gameState.winnerPlayer = gameState.player
-                gameState.winnerPlayerColour = gameState.player
-                return gameState.win
+            if(grid[r][c] === 'red' && grid[r+1][c-1] === 'red' && grid[r+2][c-2] === 'red' && grid[r+3][c-3] === 'red') {
+                return 'red'
+            } if(grid[r][c] === 'yellow' && grid[r+1][c-1] === 'yellow' && grid[r+2][c-2] === 'yellow' && grid[r+3][c-3] === 'yellow') {
+                return 'yellow'
             }
         }
     }
-    gameState.gameOver = false
     return null
 }
 

@@ -1,5 +1,14 @@
 // UI LOGIC
 
+// const { gameState, takeTurn,
+//   getLowestAvailableRowInColumn,
+//   verticalWinner,
+//   horizontalWinner,
+//   diagonalDownWinner,
+//   diagonalUpWinner,
+//   nobodyWinner,
+//   resetGame } = require('./connect4_code');
+
 // -----------------------------DIRTY LAYER-----------------------------
 
 // Declare HTML selectors and store as variables
@@ -31,7 +40,7 @@ displayCurrentPlayerColour.style.backgroundColor = 'red'
 // takes a turn based on user clicking a slot and returns a winner if won
 function playerClick(e) {
     const id = e.target.id // 'row1-col1' ie 'rowY-colX' 
-    const colNum = id[8]
+    const colNum = Number.parseInt(id[8])
     const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, gameState.grid)
     document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = gameState.player
     takeTurn(lowestAvailableRow, colNum)
@@ -53,26 +62,27 @@ function playerClick(e) {
     const winner = (verticalWinner(gameState.grid) || horizontalWinner(gameState.grid) || diagonalDownWinner(gameState.grid) || diagonalUpWinner(gameState.grid) || nobodyWinner(gameState.grid))
    
     if (winner !== null) {
+      gameState.winnerPlayerColour = winner
       if (winner === 'red') {
         gameState.winnerPlayer = gameState.player1Name
         result.textContent = `WINNER: ${gameState.winnerPlayer} (${gameState.winnerPlayerColour})`
         result.style.backgroundColor = gameState.winnerPlayerColour
         updateHighscore().then(getHighscore)
-        return alert(`${gameState.player1Name} is the Winner!`)
+        alert(`${gameState.player1Name} is the Winner!`)
 
       } else if (winner === 'yellow') {
         gameState.winnerPlayer = gameState.player2Name
         result.textContent = `WINNER: ${gameState.winnerPlayer} (${gameState.winnerPlayerColour})`
         result.style.backgroundColor = gameState.winnerPlayerColour
         updateHighscore().then(getHighscore)
-        return alert(`${gameState.player2Name} is the Winner!`)
+        alert(`${gameState.player2Name} is the Winner!`)
 
       } else if (winner === 'nobody') {
         gameState.winnerPlayer = 'nobody'
         result.textContent = `IT'S A TIE: ${gameState.winnerPlayer} won :()`
         result.style.backgroundColor = 'blue'
         getHighscore()
-        return alert(`It\s a tie!`)
+        alert(`It\s a tie!`)
       }
     
     }
