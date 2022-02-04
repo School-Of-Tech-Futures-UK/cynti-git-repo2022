@@ -1,13 +1,7 @@
-// UI LOGIC
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 
-// const { gameState, takeTurn,
-//   getLowestAvailableRowInColumn,
-//   verticalWinner,
-//   horizontalWinner,
-//   diagonalDownWinner,
-//   diagonalUpWinner,
-//   nobodyWinner,
-//   resetGame } = require('./connect4_code');
+// UI LOGIC
 
 // -----------------------------DIRTY LAYER-----------------------------
 
@@ -82,7 +76,7 @@ function playerClick(e) {
         result.textContent = `IT'S A TIE: ${gameState.winnerPlayer} won :()`
         result.style.backgroundColor = 'blue'
         getHighscore()
-        alert(`It\s a tie!`)
+        alert(`It's a tie!`)
       }
     }
     console.log(`This is turn no: ${gameState.turn}`)
