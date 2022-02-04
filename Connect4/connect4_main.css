@@ -12,6 +12,8 @@
     padding: 30px
 }
 
+
+
 .row {
     align-self: center;
 }
@@ -42,4 +44,36 @@
     text-align: center;
     font-size: 200%;
     list-style-type: none;
+}
+
+#result {
+    animation: blinkingText 1s infinite;
+    font-family: futura;
+    font-style: italic;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    font-size: 45px;
+    background-color: #fc030b;
+}
+
+@keyframes blinkingText {
+    from {
+        opacity: 1;
+        color : yellow;
+        }
+    to {
+        opacity: 0;
+        color : white;
+        }
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
