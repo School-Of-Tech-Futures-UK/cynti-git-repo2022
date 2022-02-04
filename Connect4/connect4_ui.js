@@ -36,6 +36,8 @@ function playerClick(e) {
     const id = e.target.id // 'row1-col1' ie 'rowY-colX' 
     const colNum = Number.parseInt(id[8])
     const lowestAvailableRow = getLowestAvailableRowInColumn(colNum, gameState.grid)
+
+    if(lowestAvailableRow !== null) {
     document.getElementById(`row${lowestAvailableRow + 1}-col${colNum}`).style.backgroundColor = gameState.player
     takeTurn(lowestAvailableRow, colNum)
 
@@ -73,6 +75,7 @@ function playerClick(e) {
       }
     }
     console.log(`This is turn no: ${gameState.turn}`)
+  }
 }
 
 
