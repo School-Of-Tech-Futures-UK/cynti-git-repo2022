@@ -66,7 +66,7 @@ function playerClick(e) {
 
       } else if (winner === 'nobody') {
         gameState.winnerPlayer = 'nobody'
-        result.textContent = `IT'S A TIE: ${gameState.winnerPlayer} won :()`
+        result.textContent = `IT'S A TIE: ${gameState.winnerPlayer} won :(`
         result.style.backgroundColor = 'blue'
         getHighscore()
         alert(`It's a tie!`)
