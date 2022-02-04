@@ -84,7 +84,6 @@ function playerClick(e) {
         getHighscore()
         alert(`It\s a tie!`)
       }
-    
     }
     console.log(`This is turn no: ${gameState.turn}`)
     console.log(gameState.grid)

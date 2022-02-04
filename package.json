@@ -4,7 +4,8 @@
   "description": "",
   "main": "connect4_server.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "serve": "node Connect4/connect4_server.js"
   },
   "repository": {
     "type": "git",
